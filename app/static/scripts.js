@@ -10,6 +10,7 @@ function openTab(evt, tabName) {
     }
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+    localStorage.setItem('activeTab', tabName); // Зберегти активну вкладку в localStorage
 }
 
 function toggleMenu() {
@@ -21,8 +22,19 @@ function toggleMenu() {
     }
 }
 
-document.getElementById("AddExpense").style.display = "block";
-document.querySelector(".tablink").className += " active";
+function setDefaultTab() {
+    var activeTab = localStorage.getItem('activeTab'); // Отримати активну вкладку з localStorage
+    if (activeTab) {
+        document.getElementById(activeTab).style.display = "block";
+        document.querySelector(`.tablink[onclick="openTab(event, '${activeTab}')"]`).className += " active";
+    } else {
+        document.getElementById("AddExpense").style.display = "block";
+        document.querySelector(".tablink").className += " active";
+    }
+}
+
+// Виклик setDefaultTab при завантаженні сторінки
+document.addEventListener('DOMContentLoaded', setDefaultTab);
 
 // Встановлення сьогоднішньої дати за замовчуванням
 document.getElementById('date').valueAsDate = new Date();
@@ -33,7 +45,8 @@ function confirmDelete(type, id) {
     document.getElementById('deleteType').innerText = type;
     modal.style.display = "block";
     deleteButton.onclick = function() {
-        window.location.href = `/delete_${type}/${id}`;
+        var activeTab = localStorage.getItem('activeTab') || 'AddExpense'; // Використати активну вкладку або вкладку за замовчуванням
+        window.location.href = `/delete_${type}/${id}?tab=${activeTab}`;
     }
 }
 

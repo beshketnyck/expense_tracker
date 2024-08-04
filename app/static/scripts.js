@@ -60,3 +60,22 @@ function editExpense(id, amount, categoryId, comment, date) {
     modal.style.display = "block";
     document.getElementById('editExpenseForm').action = `/edit_expense/${id}`;
 }
+
+// Додатковий код для повернення до вигляду ПК
+function adjustMenuVisibility() {
+    var menuButton = document.getElementsByClassName('menu-button')[0];
+    var tabs = document.getElementsByClassName('tabs')[0];
+    if (window.innerWidth > 600) {
+        menuButton.style.display = 'none';
+        tabs.style.display = 'flex';
+    } else {
+        menuButton.style.display = 'block';
+        tabs.style.display = 'none';
+    }
+}
+
+// Виконати adjustMenuVisibility при завантаженні сторінки
+window.addEventListener('load', adjustMenuVisibility);
+
+// Виконати adjustMenuVisibility при зміні розміру вікна
+window.addEventListener('resize', adjustMenuVisibility);

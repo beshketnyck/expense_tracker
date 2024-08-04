@@ -181,4 +181,42 @@ button:hover {
         display: none;
         flex-direction: column;
     }
+
+    .list-group-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .list-group-item div {
+        margin-top: 10px;
+    }
+
+    .list-group-item button {
+        margin-top: 5px;
+    }
+}
+
+/* Додаткові стилі для відображення інформації */
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expense-item .expense-date,
+.expense-item .expense-amount,
+.expense-item .expense-category,
+.expense-item .expense-comment {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.expense-item .expense-comment {
+    font-style: italic;
+}
+
+.expense-item .btn-group {
+    display: flex;
+    align-items: center;
 }

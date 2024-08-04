@@ -13,7 +13,7 @@ def index():
 
 @app.route('/add_category', methods=['POST'])
 def add_category():
-    name = request.form['name']
+    name = request.form['name'].capitalize()
     category = Category(name=name)
     db_session.add(category)
     db_session.commit()
@@ -22,22 +22,33 @@ def add_category():
 @app.route('/edit_category/<int:id>', methods=['POST'])
 def edit_category(id):
     category = Category.query.get(id)
-    category.name = request.form['name']
+    category.name = request.form['name'].capitalize()
     db_session.commit()
     return redirect(url_for('index'))
 
 @app.route('/delete_category/<int:id>')
 def delete_category(id):
-    category = Category.query.get(id)
-    default_category = Category.query.filter_by(name='без категорії').first()
-    
-    # Переназначаємо всі витрати до категорії "без категорії"
-    expenses = Expense.query.filter_by(category_id=id).all()
-    for expense in expenses:
-        expense.category_id = default_category.id
+    try:
+        category = Category.query.get(id)
+        default_category = Category.query.filter_by(name='Без категорії').first()
 
-    db_session.delete(category)
-    db_session.commit()
+        # Якщо категорія "Без категорії" не знайдена, створимо її
+        if not default_category:
+            default_category = Category(name='Без категорії')
+            db_session.add(default_category)
+            db_session.commit()
+
+        # Переназначаємо всі витрати до категорії "Без категорії"
+        expenses = Expense.query.filter_by(category_id=id).all()
+        for expense in expenses:
+            expense.category_id = default_category.id
+
+        db_session.commit()  # Зберігаємо зміни у витратах перед видаленням категорії
+        db_session.delete(category)
+        db_session.commit()
+    except Exception as e:
+        db_session.rollback()
+        print(f"Error deleting category: {e}")
     return redirect(url_for('index'))
 
 @app.route('/add_expense', methods=['POST'])
@@ -47,7 +58,12 @@ def add_expense():
     comment = request.form['comment']
     date = request.form['date']
     if not category_id:
-        category_id = 1  # ID категорії "без категорії", припускаємо, що це перший запис у таблиці
+        default_category = Category.query.filter_by(name='Без категорії').first()
+        if not default_category:
+            default_category = Category(name='Без категорії')
+            db_session.add(default_category)
+            db_session.commit()
+        category_id = default_category.id
     expense = Expense(amount=amount, category_id=category_id, comment=comment, date=date)
     db_session.add(expense)
     db_session.commit()
@@ -73,9 +89,9 @@ def delete_expense(id):
 if __name__ == '__main__':
     init_db()
 
-    # Створення категорії "без категорії", якщо ще не існує
-    if not Category.query.filter_by(name='без категорії').first():
-        default_category = Category(name='без категорії')
+    # Створення категорії "Без категорії", якщо ще не існує
+    if not Category.query.filter_by(name='Без категорії').first():
+        default_category = Category(name='Без категорії')
         db_session.add(default_category)
         db_session.commit()
 

@@ -25,7 +25,7 @@
 
                 <label for="category">Category:</label>
                 <select id="category" name="category_id">
-                    <option value="">без категорії</option>
+                    <option value="">Без категорії</option>
                     {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
                     {% endfor %}

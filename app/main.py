@@ -19,6 +19,27 @@ def add_category():
     db_session.commit()
     return redirect(url_for('index'))
 
+@app.route('/edit_category/<int:id>', methods=['POST'])
+def edit_category(id):
+    category = Category.query.get(id)
+    category.name = request.form['name']
+    db_session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/delete_category/<int:id>')
+def delete_category(id):
+    category = Category.query.get(id)
+    default_category = Category.query.filter_by(name='без категорії').first()
+    
+    # Переназначаємо всі витрати до категорії "без категорії"
+    expenses = Expense.query.filter_by(category_id=id).all()
+    for expense in expenses:
+        expense.category_id = default_category.id
+
+    db_session.delete(category)
+    db_session.commit()
+    return redirect(url_for('index'))
+
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     amount = request.form['amount']
@@ -29,6 +50,23 @@ def add_expense():
         category_id = 1  # ID категорії "без категорії", припускаємо, що це перший запис у таблиці
     expense = Expense(amount=amount, category_id=category_id, comment=comment, date=date)
     db_session.add(expense)
+    db_session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/edit_expense/<int:id>', methods=['POST'])
+def edit_expense(id):
+    expense = Expense.query.get(id)
+    expense.amount = request.form['amount']
+    expense.category_id = request.form['category_id']
+    expense.comment = request.form['comment']
+    expense.date = request.form['date']
+    db_session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/delete_expense/<int:id>')
+def delete_expense(id):
+    expense = Expense.query.get(id)
+    db_session.delete(expense)
     db_session.commit()
     return redirect(url_for('index'))
 

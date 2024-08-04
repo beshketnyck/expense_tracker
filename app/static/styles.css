@@ -28,7 +28,7 @@ label {
     font-weight: bold;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"], input[type="date"], select {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;

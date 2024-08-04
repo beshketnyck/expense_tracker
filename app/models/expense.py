@@ -3,7 +3,7 @@ from database import Base
 
 class Expense(Base):
     __tablename__ = 'expenses'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     amount = Column(Float, nullable=False)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
     comment = Column(String(200), nullable=True)

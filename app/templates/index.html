@@ -9,15 +9,13 @@
 <body>
     <div class="container">
         <h1>Expense Tracker</h1>
-        <div class="form-container">
-            <h2>Add Category</h2>
-            <form action="/add_category" method="post">
-                <label for="name">Category Name:</label>
-                <input type="text" id="name" name="name" required>
-                <button type="submit">Add Category</button>
-            </form>
+        <div class="tabs">
+            <button class="tablink" onclick="openTab(event, 'AddExpense')">Add Expense</button>
+            <button class="tablink" onclick="openTab(event, 'AddCategory')">Add Category</button>
+            <button class="tablink" onclick="openTab(event, 'Categories')">Categories</button>
         </div>
-        <div class="form-container">
+
+        <div id="AddExpense" class="tabcontent">
             <h2>Add Expense</h2>
             <form action="/add_expense" method="post">
                 <label for="amount">Amount (UAH):</label>
@@ -25,7 +23,7 @@
 
                 <label for="category">Category:</label>
                 <select id="category" name="category_id">
-                    <option value="">Без категорії</option>
+                    <option value="">без категорії</option>
                     {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
                     {% endfor %}
@@ -40,7 +38,17 @@
                 <button type="submit">Add Expense</button>
             </form>
         </div>
-        <div class="categories-list">
+
+        <div id="AddCategory" class="tabcontent">
+            <h2>Add Category</h2>
+            <form action="/add_category" method="post">
+                <label for="name">Category Name:</label>
+                <input type="text" id="name" name="name" required>
+                <button type="submit">Add Category</button>
+            </form>
+        </div>
+
+        <div id="Categories" class="tabcontent">
             <h2>Categories</h2>
             <ul>
                 {% for category in categories %}
@@ -49,5 +57,25 @@
             </ul>
         </div>
     </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Відкриваємо вкладку "AddExpense" за замовчуванням
+        document.getElementById("AddExpense").style.display = "block";
+        document.querySelector(".tablink").className += " active";
+    </script>
 </body>
 </html>

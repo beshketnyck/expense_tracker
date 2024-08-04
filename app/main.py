@@ -1,4 +1,3 @@
-# Імпортуйте необхідні модулі
 from flask import Flask, render_template, request, redirect, url_for
 from models.expense import Expense
 from models.category import Category
@@ -9,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     categories = Category.query.all()
-    expenses = Expense.query.all()
+    expenses = db_session.query(Expense).all()
     return render_template('index.html', categories=categories, expenses=expenses)
 
 @app.route('/add_category', methods=['POST'])
@@ -37,8 +36,8 @@ if __name__ == '__main__':
     init_db()
 
     # Створення категорії "без категорії", якщо ще не існує
-    if not Category.query.filter_by(name='Без категорії').first():
-        default_category = Category(name='Без категорії')
+    if not Category.query.filter_by(name='без категорії').first():
+        default_category = Category(name='без категорії')
         db_session.add(default_category)
         db_session.commit()
 

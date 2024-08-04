@@ -13,7 +13,9 @@
             <button class="tablink" onclick="openTab(event, 'AddExpense')">Add Expense</button>
             <button class="tablink" onclick="openTab(event, 'AddCategory')">Add Category</button>
             <button class="tablink" onclick="openTab(event, 'Categories')">Categories</button>
+            <button class="tablink" onclick="openTab(event, 'Expenses')">Expenses</button>
         </div>
+        <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
 
         <div id="AddExpense" class="tabcontent">
             <h2>Add Expense</h2>
@@ -56,6 +58,15 @@
                 {% endfor %}
             </ul>
         </div>
+
+        <div id="Expenses" class="tabcontent">
+            <h2>Expenses</h2>
+            <ul>
+                {% for expense in expenses %}
+                <li>{{ expense.date }} - {{ expense.amount }} UAH - {{ expense.category.name }} - {{ expense.comment }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
     <script>
@@ -73,9 +84,20 @@
             evt.currentTarget.className += " active";
         }
 
-        // Відкриваємо вкладку "AddExpense" за замовчуванням
+        function toggleMenu() {
+            var x = document.getElementsByClassName("tabs")[0];
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+
         document.getElementById("AddExpense").style.display = "block";
         document.querySelector(".tablink").className += " active";
+
+        // Встановлення сьогоднішньої дати за замовчуванням
+        document.getElementById('date').valueAsDate = new Date();
     </script>
 </body>
 </html>

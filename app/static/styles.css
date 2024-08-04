@@ -21,6 +21,8 @@ h1 {
 .tabs {
     overflow: hidden;
     background-color: #f1f1f1;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .tablink {
@@ -32,6 +34,8 @@ h1 {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .tablink:hover {
@@ -88,6 +92,21 @@ button:hover {
     border-radius: 4px;
 }
 
+.menu-button {
+    display: none;
+    background-color: #f1f1f1;
+    border: none;
+    color: black;
+    padding: 14px 16px;
+    font-size: 17px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.menu-button:hover {
+    background-color: #ddd;
+}
+
 /* Адаптація для мобільних пристроїв */
 @media (max-width: 600px) {
     .container {
@@ -102,12 +121,12 @@ button:hover {
         text-align: center;
     }
 
-    input[type="text"], input[type="number"], input[type="date"], select {
-        padding: 6px;
+    .menu-button {
+        display: block;
     }
 
-    button {
-        width: 100%;
-        padding: 12px;
+    .tabs {
+        display: none;
+        flex-direction: column;
     }
 }

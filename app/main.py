@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    categories = Category.query.all()
+    categories = Category.query.filter(Category.name != 'Без категорії').all()
     expenses = db_session.query(Expense).all()
     return render_template('index.html', categories=categories, expenses=expenses)
 

@@ -82,12 +82,12 @@
             <h2>Expenses</h2>
             <ul class="list-group">
                 {% for expense in expenses %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
                     <div class="expense-item">
                         <span class="expense-date">{{ expense.date }}</span>
-                        <span class="expense-amount">{{ expense.amount }} ₴</span>
+                        <span class="expense-amount text-danger">{{ expense.amount }} ₴</span>
                         <span class="expense-category">{{ expense.category.name }}</span>
-                        <span class="expense-comment">{{ expense.comment }}</span>
+                        <span class="expense-comment text-secondary">{{ expense.comment }}</span>
                     </div>
                     <div class="btn-group">
                         <button class="btn btn-secondary mr-2" onclick="editExpense({{ expense.id }}, {{ expense.amount }}, {{ expense.category_id }}, '{{ expense.comment }}', '{{ expense.date }}')">

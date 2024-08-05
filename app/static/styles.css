@@ -168,10 +168,13 @@ button:hover {
 
 .expense-item .expense-date,
 .expense-item .expense-amount,
-.expense-item .expense-category,
-.expense-item .expense-comment {
+.expense-item .expense-category {
     margin-right: 10px;
     font-weight: bold;
+}
+
+.expense-item .expense-amount {
+    font-size: 1.25em;
 }
 
 .expense-item .expense-comment {

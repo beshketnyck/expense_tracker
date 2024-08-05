@@ -159,6 +159,30 @@ button:hover {
     cursor: pointer;
 }
 
+/* Додаткові стилі для відображення інформації */
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expense-item .expense-date,
+.expense-item .expense-amount,
+.expense-item .expense-category,
+.expense-item .expense-comment {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.expense-item .expense-comment {
+    font-style: italic;
+}
+
+.expense-item .btn-group {
+    display: flex;
+    align-items: center;
+}
+
 /* Адаптація для мобільних пристроїв */
 @media (max-width: 600px) {
     .container {
@@ -195,28 +219,4 @@ button:hover {
     .list-group-item button {
         margin-top: 5px;
     }
-}
-
-/* Додаткові стилі для відображення інформації */
-.expense-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.expense-item .expense-date,
-.expense-item .expense-amount,
-.expense-item .expense-category,
-.expense-item .expense-comment {
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-.expense-item .expense-comment {
-    font-style: italic;
-}
-
-.expense-item .btn-group {
-    display: flex;
-    align-items: center;
 }
